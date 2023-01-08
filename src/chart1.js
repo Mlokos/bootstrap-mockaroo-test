@@ -1,6 +1,21 @@
-async function createChart1() {
-    var ctx = document.getElementById('chart1');
+var ctx = document.getElementById('chart1');
+var chart1 = new Chart(
+    ctx, {
+    type: 'bar',
+    data: {
+        labels: availableTeams,
+        datasets: [
+            {
+                label: 'Number of players',
+                data: [],
+                borderWidth: 1
+            }
+        ]
+    }
+}
+)
 
+async function createChart1() {
     apiKey = formData.value
     data = await (await fetch(mockarooEndpoint(apiKey))).json();
 
@@ -18,19 +33,12 @@ async function createChart1() {
         teamQuantityCount.push(teamDictQuantityCount[availableTeams[i]])
     }
 
-    new Chart(
-        ctx, {
-            type: 'bar',
-            data: {
-                labels: availableTeams,
-                datasets: [
-                    {
-                        label: 'Number of players',
-                        data: teamQuantityCount,
-                        borderWidth: 1
-                    }
-                ]
-            }
-        }
-    )
+    console.log(chart1.data)
+
+    chart1.data.datasets[0] = {
+        label: 'Number of players',
+        data: teamQuantityCount,
+        borderWidth: 1
+    }
+    chart1.update()
 }

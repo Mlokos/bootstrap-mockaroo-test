@@ -1,6 +1,29 @@
-async function createChart2() {
-    var ctx = document.getElementById('chart2');
+var ctx = document.getElementById('chart2');
+var chart2 = new Chart(
+    ctx, {
+    type: 'bar',
+    data: {
+        labels: availableTeams,
+        datasets: [
+            {
+                label: 'Won matches',
+                data: [],
+                borderWidth: 1
+            },
+            {
+                label: 'Lost matches',
+                data: [],
+                borderWidth: 1
+            }
+        ]
+    },
+    options: {
+        indexAxis: 'y'
+    }
+}
+)
 
+async function createChart2() {
     apiKey = formData.value
     data = await (await fetch(mockarooEndpoint(apiKey))).json();
 
@@ -28,27 +51,15 @@ async function createChart2() {
         teamLoseCount.push(teamDictLoseCount[availableTeams[i]])
     }
 
-    new Chart(
-        ctx, {
-            type: 'bar',
-            data: {
-                labels: availableTeams,
-                datasets: [
-                    {
-                        label: 'Won matches',
-                        data: teamWinCount,
-                        borderWidth: 1
-                    },
-                    {
-                        label: 'Lost matches',
-                        data: teamLoseCount,
-                        borderWidth: 1
-                    }
-                ]
-            },
-            options: {
-                indexAxis: 'y'
-            }
-        }
-    )
+    chart2.data.datasets[0] = {
+        label: 'Number of players',
+        data: teamWinCount,
+        borderWidth: 1
+    }
+    chart2.data.datasets[1] = {
+        label: 'Number of players',
+        data: teamLoseCount,
+        borderWidth: 1
+    }
+    chart2.update()
 }
