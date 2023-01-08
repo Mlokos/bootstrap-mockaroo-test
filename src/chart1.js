@@ -15,10 +15,7 @@ var chart1 = new Chart(
 }
 )
 
-async function createChart1() {
-    apiKey = formData.value
-    data = await (await fetch(mockarooEndpoint(apiKey))).json();
-
+async function updateChart1(data) {
     var teamDictQuantityCount = {}
     for (var i = 0, size = availableTeams.length; i < size; ++i) {
         teamDictQuantityCount[availableTeams[i]] = 0

@@ -23,10 +23,7 @@ var chart2 = new Chart(
 }
 )
 
-async function createChart2() {
-    apiKey = formData.value
-    data = await (await fetch(mockarooEndpoint(apiKey))).json();
-
+async function updateChart2(data) {
     var teamDictWinCount = {}
     var teamDictLoseCount = {}
     for (var i = 0, size = availableTeams.length; i < size; ++i) {
@@ -52,12 +49,12 @@ async function createChart2() {
     }
 
     chart2.data.datasets[0] = {
-        label: 'Number of players',
+        label: 'Won matches',
         data: teamWinCount,
         borderWidth: 1
     }
     chart2.data.datasets[1] = {
-        label: 'Number of players',
+        label: 'Lost matches',
         data: teamLoseCount,
         borderWidth: 1
     }
